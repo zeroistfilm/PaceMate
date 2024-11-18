@@ -1,0 +1,29 @@
+digraph UserDomain {
+    rankdir=LR;
+    node [shape=record, fontname="Arial"];
+    
+    // 열거형
+    Gender [label="{<<enumeration>>\nGender|MALE\lFEMALE\lOTHER\l}"];
+    
+    ActivityLevel [label="{<<enumeration>>\nActivityLevel|SEDENTARY\lLIGHTLY_ACTIVE\lMODERATELY_ACTIVE\lVERY_ACTIVE\lEXTRA_ACTIVE\l}"];
+    
+    // 클래스 정의
+    HealthMetrics [label="{HealthMetrics|+ height: float\l+ weight: float\l+ body_fat: Optional[float]\l+ resting_heart_rate: Optional[int]\l+ vo2_max: Optional[float]\l+ recorded_at: datetime\l|+ calculate_bmi(): float\l}"];
+    
+    WorkoutGoal [label="{WorkoutGoal|+ goal_type: WorkoutGoalType\l+ target_value: float\l+ start_date: datetime\l+ end_date: datetime\l+ achieved: bool\l+ progress: float\l}"];
+    
+    UserPreferences [label="{UserPreferences|+ preferred_workout_types: List[str]\l+ distance_unit: str\l+ weight_unit: str\l+ language: str\l+ notification_enabled: bool\l+ share_workouts: bool\l}"];
+    
+    UserStats [label="{UserStats|+ total_workouts: int\l+ total_distance: float\l+ total_duration: float\l+ total_calories: int\l+ best_pace: Optional[float]\l+ longest_workout: Optional[float]\l+ highest_elevation: Optional[float]\l}"];
+    
+    User [label="{User|+ id: UUID\l+ email: str\l+ username: str\l+ password_hash: str\l+ name: str\l+ birth_date: datetime\l+ gender: Gender\l+ join_date: datetime\l+ activity_level: ActivityLevel\l+ health_metrics: List[HealthMetrics]\l+ workout_goals: List[WorkoutGoal]\l+ preferences: UserPreferences\l+ stats: UserStats\l+ is_active: bool\l+ last_login: Optional[datetime]\l|+ add_health_metrics(metrics: HealthMetrics)\l+ get_current_health_metrics(): HealthMetrics\l+ add_workout_goal(goal: WorkoutGoal)\l+ update_stats(...)\l+ calculate_daily_calories(): float\l+ update_preferences(new_preferences: UserPreferences)\l+ deactivate_account()\l+ record_login()\l}"];
+    
+    // 관계
+    edge [arrowhead=diamond, dir=both, arrowtail=none];
+    User -> Gender [headlabel="1", taillabel="1", label="사용자는 하나의 성별을 가질 수 있습니다."];
+    User -> ActivityLevel [headlabel="1", taillabel="1", label="사용자는 하나의 활동량 수준을 가질 수 있습니다."];
+    User -> HealthMetrics [headlabel="0..*", taillabel="1", label="사용자는 여러 개의 건강 지표를 가질 수 있습니다."];
+    User -> WorkoutGoal [headlabel="0..*", taillabel="1", label="사용자는 여러 개의 운동 목표를 가질 수 있습니다."];
+    User -> UserPreferences [headlabel="1", taillabel="1", label="사용자는 하나의 설정을 가질 수 있습니다."];
+    User -> UserStats [headlabel="1", taillabel="1", label="사용자는 하나의 통계 정보를 가질 수 있습니다."];
+} 

@@ -1,0 +1,6 @@
+digraph Product {
+    rankdir=LR;
+    node [shape=record, fontname="Arial"];
+    
+    Product [label="{Product|+ id: UUID\l+ name: str\l+ description: str\l+ price: float\l+ condition: str\l+ category: str\l+ seller_id: UUID\l+ created_at: datetime\l+ updated_at: datetime\l|+ update_price(new_price: float)\l+ mark_as_sold()\l}"];
+} 

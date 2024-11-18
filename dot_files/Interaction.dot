@@ -1,0 +1,27 @@
+digraph DomainInteraction {
+    rankdir=LR;
+    node [shape=record, fontname="Arial"];
+    
+    User [label="{User|+ id: UUID\l+ email: str\l+ username: str\l|+ add_workout_goal(goal: WorkoutGoal)\l+ update_stats(...)\l}"];
+    Workout [label="{Workout|+ id: UUID\l+ user: User\l|+ add_track_point(track_point: TrackPoint)\l+ calculate_summary(): WorkoutSummary\l}"];
+    Challenge [label="{Challenge|+ id: UUID\l+ participants: List[ChallengeParticipant]\l|+ add_participant(user_id: UUID)\l+ get_rankings(): List[ChallengeParticipant]\l}"];
+    Club [label="{Club|+ id: UUID\l+ members: List[ClubMember]\l|+ add_member(user_id: UUID)\l+ create_event(...)\l}"];
+    Event [label="{Event|+ id: UUID\l+ registrations: List[EventRegistration]\l|+ register_participant(user_id: UUID)\l}"];
+    Notification [label="{Notification|+ id: UUID\l+ user_id: UUID\l|+ mark_as_read()\l+ mark_as_sent()\l}"];
+    Market [label="{Market|+ id: UUID\l+ posts: List[MarketPost]\l|+ add_post(product: Product, seller_id: UUID) -> MarketPost\l+ get_active_posts() -> List[MarketPost]\l}"];
+    Product [label="{Product|+ id: UUID\l+ name: str\l+ description: str\l+ price: float\l+ condition: str\l+ category: str\l+ seller_id: UUID\l|+ update_price(new_price: float)\l+ mark_as_sold()\l}"];
+    Community [label="{Community|+ id: UUID\l+ posts: List[CommunityPost]\l|+ add_post(title: str, content: str, author_id: UUID, post_type: PostType) -> CommunityPost\l+ get_active_posts() -> List[CommunityPost]\l}"];
+    
+    // 관계
+    User -> Workout [label="유저는 여러 개의 워크아웃을 할 수 있다."];
+    User -> Challenge [label="유저는 여러 개의 챌린지에 참여할 수 있다."];
+    User -> Club [label="유저는 여러 개의 클럽에 가입할 수 있다."];
+    User -> Notification [label="유저는 여러 개의 알림을 받을 수 있다."];
+    User -> Market [label="유저는 중고 상품을 판매할 수 있다."];
+    User -> Community [label="유저는 커뮤니티 게시글을 작성할 수 있다."];
+    Market -> Product [label="마켓은 여러 개의 상품을 포함할 수 있다."];
+    Workout -> Challenge [label="워크아웃은 여러 개의 챌린지와 관련될 수 있다."];
+    Club -> Event [label="클럽은 여러 개의 이벤트를 가질 수 있다."];
+    Event -> Notification [label="이벤트는 여러 개의 알림을 생성할 수 있다."];
+    Community -> CommunityPost [label="커뮤니티는 여러 개의 게시글을 가질 수 있다."];
+} 

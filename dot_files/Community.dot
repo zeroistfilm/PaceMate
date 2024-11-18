@@ -1,0 +1,22 @@
+digraph Community {
+    rankdir=LR;
+    node [shape=record, fontname="Arial"];
+    
+    PostType [label="{<<enumeration>>\nPostType|GENERAL\lMARKET\lREVIEW\lEVENT\lNOTICE\lPROMOTION\l}"];
+    
+    PostStatus [label="{<<enumeration>>\nPostStatus|DRAFT\lPUBLISHED\lHIDDEN\lDELETED\l}"];
+    
+    Comment [label="{Comment|+ id: UUID\l+ post_id: UUID\l+ user_id: UUID\l+ content: str\l+ created_at: datetime\l+ updated_at: datetime\l+ parent_id: Optional[UUID]\l+ is_deleted: bool\l|+ soft_delete()\l}"];
+    
+    Attachment [label="{Attachment|+ id: UUID\l+ file_name: str\l+ file_type: str\l+ file_size: int\l+ file_url: str\l+ uploaded_at: datetime\l}"];
+    
+    CommunityPost [label="{CommunityPost|+ id: UUID\l+ title: str\l+ content: str\l+ author_id: UUID\l+ post_type: PostType\l+ status: PostStatus\l+ created_at: datetime\l+ updated_at: datetime\l+ comments: List[Comment]\l+ attachments: List[Attachment]\l|+ add_comment(user_id: UUID, content: str)\l+ add_attachment(file_name: str, file_type: str, file_size: int, file_url: str)\l+ delete()\l}"];
+    
+    Community [label="{Community|+ id: UUID\l+ posts: List[CommunityPost]\l|+ add_post(title: str, content: str, author_id: UUID, post_type: PostType) -> CommunityPost\l+ get_active_posts() -> List[CommunityPost]\l}"];
+    
+    // 관계
+    edge [arrowhead=diamond, dir=both, arrowtail=none];
+    CommunityPost -> Comment [headlabel="0..*", taillabel="1", label="게시글은 여러 개의 댓글을 가질 수 있습니다."];
+    CommunityPost -> Attachment [headlabel="0..*", taillabel="1", label="게시글은 여러 개의 첨부파일을 가질 수 있습니다."];
+    Community -> CommunityPost [headlabel="0..*", taillabel="1", label="커뮤니티는 여러 개의 게시글을 가질 수 있습니다."];
+} 

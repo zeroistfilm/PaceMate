@@ -1,0 +1,13 @@
+digraph Market {
+    rankdir=LR;
+    node [shape=record, fontname="Arial"];
+    
+    MarketPost [label="{MarketPost|+ id: UUID\l+ product: Product\l+ seller_id: UUID\l+ created_at: datetime\l+ updated_at: datetime\l+ status: str\l|+ mark_as_sold()\l+ delete()\l}"];
+    
+    Market [label="{Market|+ id: UUID\l+ posts: List[MarketPost]\l|+ add_post(product: Product, seller_id: UUID) -> MarketPost\l+ get_active_posts() -> List[MarketPost]\l}"];
+    
+    // 관계
+    edge [arrowhead=diamond, dir=both, arrowtail=none];
+    MarketPost -> Product [headlabel="1", taillabel="1", label="게시글은 하나의 상품 정보를 가집니다."];
+    Market -> MarketPost [headlabel="0..*", taillabel="1", label="마켓은 여러 개의 게시글을 가질 수 있습니다."];
+} 

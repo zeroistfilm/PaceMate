@@ -1,0 +1,23 @@
+digraph Workout {
+    rankdir=LR;
+    node [shape=record, fontname="Arial"];
+    
+    // 열거형 정의
+    WorkoutType [label="{<<enumeration>>\nWorkoutType|RUNNING\lCYCLING\lWALKING\l}"];
+    
+    // 클래스 정의
+    TrackPoint [label="{TrackPoint|+ latitude: float\l+ longitude: float\l+ timestamp: datetime\l+ altitude: float\l+ heart_rate: int\l+ pace: float\l+ temperature: float\l|+ validate_heart_rate(): bool\l+ validate_pace(): bool\l}"];
+    
+    WorkoutSummary [label="{WorkoutSummary|+ avg_heart_rate: float\l+ max_heart_rate: float\l+ avg_pace: float\l+ max_pace: float\l+ calories: int\l+ elevation_gain: float\l+ weather: str\l}"];
+    
+    User [label="{User|+ id: UUID\l+ name: str\l+ age: int\l+ gender: str\l+ height: float\l+ weight: float\l+ workout_goal: str\l}"];
+    
+    Workout [label="{Workout|+ id: UUID\l+ workout_type: WorkoutType\l+ start_time: datetime\l+ end_time: datetime\l+ distance: float\l+ duration: float\l+ track_points: List[TrackPoint]\l+ user: User\l+ summary: WorkoutSummary\l|+ validate(): bool\l+ add_track_point(track_point: TrackPoint)\l+ calculate_summary(): WorkoutSummary\l- _calculate_calories(): int\l- _calculate_elevation_gain(): float\l- _get_weather(): str\l}"];
+    
+    // 관계
+    edge [arrowhead=diamond, dir=both, arrowtail=none];
+    Workout -> WorkoutType [headlabel="1", taillabel="1", label="운동은 하나의 운동 유형을 가질 수 있습니다."];
+    Workout -> TrackPoint [headlabel="1..*", taillabel="1", label="운동은 여러 개의 트랙 포인트를 가질 수 있습니다."];
+    Workout -> WorkoutSummary [headlabel="1", taillabel="1", label="운동은 하나의 요약 정보를 가질 수 있습니다."];
+    Workout -> User [headlabel="1", taillabel="1", label="운동은 하나의 사용자와 관련됩니다."];
+} 
