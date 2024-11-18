@@ -1,0 +1,71 @@
+digraph Events {
+    // 노드 정의
+    node [shape=box];
+
+    UserService [label="UserService"];
+    WorkoutService [label="WorkoutService"];
+    ChallengeService [label="ChallengeService"];
+    CommunityService [label="CommunityService"];
+    NotificationService [label="NotificationService"];
+    DataVisualizationService [label="DataVisualizationService"];
+
+    UserCreatedEvent [label="UserCreatedEvent"];
+    UserLoggedInEvent [label="UserLoggedInEvent"];
+    UserProfileUpdatedEvent [label="UserProfileUpdatedEvent"];
+    UserPasswordChangedEvent [label="UserPasswordChangedEvent"];
+    UserDeletedEvent [label="UserDeletedEvent"];
+
+    WorkoutCreatedEvent [label="WorkoutCreatedEvent"];
+    WorkoutDataCollectedEvent [label="WorkoutDataCollectedEvent"];
+    WorkoutRouteSavedEvent [label="WorkoutRouteSavedEvent"];
+    WorkoutDataSyncedEvent [label="WorkoutDataSyncedEvent"];
+    WorkoutRecordDeletedEvent [label="WorkoutRecordDeletedEvent"];
+
+    ChallengeCreatedEvent [label="ChallengeCreatedEvent"];
+    ChallengeJoinedEvent [label="ChallengeJoinedEvent"];
+    ChallengeRecordUpdatedEvent [label="ChallengeRecordUpdatedEvent"];
+    ChallengeEndedEvent [label="ChallengeEndedEvent"];
+
+    PostCreatedEvent [label="PostCreatedEvent"];
+    CommentCreatedEvent [label="CommentCreatedEvent"];
+    PostUpdatedEvent [label="PostUpdatedEvent"];
+    PostDeletedEvent [label="PostDeletedEvent"];
+    CommentDeletedEvent [label="CommentDeletedEvent"];
+
+    NotificationSentEvent [label="NotificationSentEvent"];
+    NotificationReadEvent [label="NotificationReadEvent"];
+    WorkoutDataVisualizedEvent [label="WorkoutDataVisualizedEvent"];
+
+    // 이벤트 발행 관계
+    UserService -> UserCreatedEvent;
+    UserService -> UserLoggedInEvent;
+    UserService -> UserProfileUpdatedEvent;
+    UserService -> UserPasswordChangedEvent;
+    UserService -> UserDeletedEvent;
+
+    WorkoutService -> WorkoutCreatedEvent;
+    WorkoutService -> WorkoutDataCollectedEvent;
+    WorkoutService -> WorkoutRouteSavedEvent;
+    WorkoutService -> WorkoutDataSyncedEvent;
+    WorkoutService -> WorkoutRecordDeletedEvent;
+
+    ChallengeService -> ChallengeCreatedEvent;
+    ChallengeService -> ChallengeJoinedEvent;
+    ChallengeService -> ChallengeRecordUpdatedEvent;
+    ChallengeService -> ChallengeEndedEvent;
+
+    CommunityService -> PostCreatedEvent;
+    CommunityService -> CommentCreatedEvent;
+    CommunityService -> PostUpdatedEvent;
+    CommunityService -> PostDeletedEvent;
+    CommunityService -> CommentDeletedEvent;
+
+    NotificationService -> NotificationSentEvent;
+    NotificationService -> NotificationReadEvent;
+
+    DataVisualizationService -> WorkoutDataVisualizedEvent;
+
+    // 이벤트 처리 관계
+    NotificationService -> UserCreatedEvent;
+    NotificationService -> NotificationSentEvent;
+}
